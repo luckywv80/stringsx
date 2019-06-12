@@ -1,2 +1,1 @@
-# stringsx
-go标准库strings补充
+原项目路径： https://github.com/yudeguang/stringsx
