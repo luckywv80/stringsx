@@ -4,12 +4,13 @@ package stringsx
 import (
 	"bytes"
 	"fmt"
-	iox "github.com/kuaileniu/iox"
 	"math/rand"
 	"strconv"
 	"strings"
 	"time"
 	"unicode"
+
+	iox "github.com/kuaileniu/iox"
 )
 
 //返回第一次出现sep之后的字串符
@@ -358,4 +359,9 @@ func SplitByLen(s string, sepLen int) []string {
 		}
 	}
 	return ret
+}
+
+//字符串的长度，可以含中文、英文、数字
+func Len(str string) int {
+	return len([]rune(str))
 }
