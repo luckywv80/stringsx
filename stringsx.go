@@ -9,6 +9,7 @@ import (
 	"strings"
 	"time"
 	"unicode"
+	"unicode/utf8"
 
 	iox "github.com/kuaileniu/iox"
 )
@@ -364,4 +365,28 @@ func SplitByLen(s string, sepLen int) []string {
 //字符串的长度，可以含中文、英文、数字
 func Len(str string) int {
 	return len([]rune(str))
+}
+
+func HexEscapeNonASCII(s string) string {
+	newLen := 0
+	for i := 0; i < len(s); i++ {
+		if s[i] >= utf8.RuneSelf {
+			newLen += 3
+		} else {
+			newLen++
+		}
+	}
+	if newLen == len(s) {
+		return s
+	}
+	b := make([]byte, 0, newLen)
+	for i := 0; i < len(s); i++ {
+		if s[i] >= utf8.RuneSelf {
+			b = append(b, '%')
+			b = strconv.AppendInt(b, int64(s[i]), 16)
+		} else {
+			b = append(b, s[i])
+		}
+	}
+	return string(b)
 }
